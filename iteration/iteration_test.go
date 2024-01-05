@@ -21,6 +21,38 @@ func TestLeftPad(t *testing.T) {
 	}
 }
 
+func TestCaesarShift(t *testing.T) {
+	out := CaesarShift('a', 2)
+	expected := 'c'
+	if out != expected {
+		t.Errorf("Expected %q got %q", expected, out)
+	}
+}
+
+func TestCaesarWord(t *testing.T) {
+	out := CaesarWord("cat", 2)
+	expected := "ecv"
+	if out != expected {
+		t.Errorf("Expected %q got %q", expected, out)
+	}
+}
+
+func TestRmWhitespace(t *testing.T) {
+	out := RmWhitespace("Salami snack plate")
+	expected := "salamisnackplate"
+	if expected != out {
+		t.Errorf("Expected %q got %q", expected, out)
+	}
+}
+
+func TestVigenere(t *testing.T) {
+	out := Vigenere("Salami snack plate", "ratmilk")
+	expected := "jaemutceavwxwkke"
+	if expected != out {
+		t.Errorf("Expected %q got %q", expected, out)
+	}
+}
+
 func BenchmarkRepeat(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Repeater("a", 5)
