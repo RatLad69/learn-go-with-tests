@@ -1,16 +1,36 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
-type Wallet struct {
-	balance int
+type Coin int
+
+var ErrInsufficient = errors.New("cannot withdraw, insufficient funds")
+
+func (c Coin) String() string {
+	return fmt.Sprintf("%d Coins", c)
 }
 
-func (w *Wallet) Deposit(amount int) {
+type Wallet struct {
+	balance Coin
+}
+
+func (w *Wallet) Deposit(amount Coin) {
 	fmt.Printf("Address of balance in Deposit is %p\n", &w.balance)
 	(*w).balance += amount
 }
 
-func (w *Wallet) Balance() int {
+func (w *Wallet) Withdraw(amount Coin) error {
+	if amount > w.balance {
+		return ErrInsufficient
+	}
+
+	(*w).balance -= amount
+	return nil
+}
+
+func (w *Wallet) Balance() Coin {
 	return (*w).balance
 }
